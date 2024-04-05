@@ -7,14 +7,22 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <div class="card">
-      <ion-card-title>Plan 1</ion-card-title>
+      <ion-card-title class="title">Plan 1</ion-card-title>
       <ion-img
+        class="img"
         src="https://ionic-docs-demo-v7.vercel.app/assets/madison.jpg"
       ></ion-img>
     </div>
-    <ion-card-subtitle
-      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
-      cumque.</ion-card-subtitle
+    <ion-card-subtitle class="text"
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae suscipit
+      ipsa iure numquam! Nobis eum aliquid eius odit rem, illum in voluptatum
+      modi asperiores repellat eveniet maiores velit, quia debitis? Distinctio
+      voluptatem, beatae tenetur eligendi velit veniam accusamus illum
+      reprehenderit quia dolores molestias et sint maxime facilis, labore
+      dignissimos! Ad.</ion-card-subtitle
     >
   </ion-card>
+  <ion-button (click)="addPlan(items)" shape="round" class="menu-button"
+    ><ion-icon name="add-outline"></ion-icon
+  ></ion-button>
 </ion-content>
