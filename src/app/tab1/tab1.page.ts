@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ModalComponent } from '../components/modal/modal.component';
 
 interface CardInfo {
   header: string;
@@ -12,7 +14,7 @@ interface CardInfo {
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  constructor() {}
+  constructor(private _modalController: ModalController) {}
   items = {
     header: 'podróż',
     location: 'Włochy',
@@ -23,5 +25,26 @@ export class Tab1Page {
     console.log(
       `location: ${Plan.location} message: ${Plan.message} photo: ${Plan.photo}`
     );
+  }
+
+  modelData: any;
+
+  async openModal(data: CardInfo) {
+    const modal = await this._modalController.create({
+      component: ModalComponent,
+      componentProps: {
+        modelTitle: data.header,
+        modelLocation: data.location,
+        modelMessage: data.message,
+        modelPhoto: data.photo,
+      },
+    });
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData !== null) {
+        this.modelData = modelData.data;
+        console.log('Modal Data : ' + modelData.data);
+      }
+    });
+    return await modal.present();
   }
 }
