@@ -6,14 +6,13 @@
     "text text text . . ";
   justify-content: space-between;
 }
+
 .card ion-card-title {
   align-content: center;
   margin-left: 20vw;
   margin-right: 20vw;
 }
-.text {
-  margin: 10px;
-}
+
 .menu-button {
   position: fixed;
   --border-radius: 50%;
@@ -21,4 +20,8 @@
   --padding-end: 8px;
   top: 87vh;
   right: 20px;
+}
+
+.text {
+  margin: 10px;
 }
