@@ -10,13 +10,21 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let plan of plans">
-    <div class="card">
-      <ion-card-title class="title">{{plan.header}}</ion-card-title>
-      <ion-img class="img" src="{{plan.photo}}"></ion-img>
-    </div>
-    <ion-card-subtitle class="text">{{plan.subheader}}</ion-card-subtitle>
-  </ion-card>
+  <ion-reorder-group
+    [disabled]="false"
+    (ionItemReorder)="handleReorder($any($event))"
+  >
+    <ion-card *ngFor="let plan of plans">
+      <ion-reorder class="reorder"></ion-reorder>
+      <div class="card">
+        <ion-card-title class="title"
+          >{{plan.header}} id: {{plan.id}}</ion-card-title
+        >
+        <ion-img class="img" src="{{plan.photo}}"></ion-img>
+      </div>
+      <ion-card-subtitle class="text">{{plan.subheader}}</ion-card-subtitle>
+    </ion-card>
+  </ion-reorder-group>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button size="small" (click)="addPlan()">

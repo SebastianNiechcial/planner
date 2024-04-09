@@ -1,5 +1,6 @@
 export const planList = [
   {
+    id: 1,
     header: 'randka',
     location: 'Włochy',
     subheader:
@@ -7,6 +8,7 @@ export const planList = [
     photo: 'https://ionic-docs-demo-v7.vercel.app/assets/madison.jpg',
   },
   {
+    id: 2,
     header: 'randka 2',
     location: 'Grecja',
     subheader:
@@ -15,6 +17,7 @@ export const planList = [
       'https://upload.wikimedia.org/wikipedia/commons/e/e7/Toucans_%28Ramphastidae%29.jpg',
   },
   {
+    id: 3,
     header: 'randka 3',
     location: 'Grecja',
     subheader:
@@ -23,6 +26,7 @@ export const planList = [
       'https://upload.wikimedia.org/wikipedia/commons/e/e7/Toucans_%28Ramphastidae%29.jpg',
   },
   {
+    id: 4,
     header: 'randka 4',
     location: 'Grecja',
     subheader:

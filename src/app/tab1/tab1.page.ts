@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ItemReorderEventDetail } from '@ionic/angular';
 import { ModalComponent } from '../components/modal/modal.component';
 import { CardInfo } from '../utils/CardInfo';
 import { planList } from '../utils/planList';
@@ -23,6 +23,11 @@ export class Tab1Page implements OnInit {
   deletePlan() {}
   title() {
     console.log('Title');
+  }
+
+  handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+    ev.detail.complete();
   }
 
   async openModal(data: CardInfo) {
