@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ModalController, ItemReorderEventDetail } from '@ionic/angular';
 import { ModalComponent } from '../components/modal/modal.component';
 import { CardInfo } from '../utils/CardInfo';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tab1',
@@ -13,11 +14,18 @@ export class Tab1Page implements OnInit {
   constructor(
     private _modalController: ModalController,
     private http: HttpClient
-  ) {}
-
+  ) {
+    this.planFormGroup = new FormGroup({
+      header: new FormControl('', Validators.required),
+      location: new FormControl('', Validators.required),
+      subheader: new FormControl('', Validators.required),
+    });
+  }
+  planFormGroup: FormGroup;
   URL = 'http://localhost:3000';
   plans: any[] = [];
   modelData: any;
+  adding = false;
 
   public ngOnInit(): void {
     this.http.get<any[]>('http://localhost:3000/plans').subscribe((resp) => {
@@ -45,9 +53,14 @@ export class Tab1Page implements OnInit {
   //     } as unknown as CardInfo),
   //   });
   // }
-  public getPlan() {}
-
+  public addPlan() {
+    this.adding = !this.adding;
+  }
   public deletePlan() {}
+  public onSubmit(formData: any) {
+    console.log(formData);
+    this.adding = !this.adding;
+  }
   public title() {
     console.log('Title');
   }
