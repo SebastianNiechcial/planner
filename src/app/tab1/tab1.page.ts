@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ModalController, ItemReorderEventDetail } from '@ionic/angular';
 import { ModalComponent } from '../components/modal/modal.component';
 import { CardInfo } from '../utils/CardInfo';
-import { planList } from '../utils/planList';
 
 @Component({
   selector: 'app-tab1',
@@ -10,22 +10,49 @@ import { planList } from '../utils/planList';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-  constructor(private _modalController: ModalController) {}
+  constructor(
+    private _modalController: ModalController,
+    private http: HttpClient
+  ) {}
 
+  URL = 'http://localhost:3000';
   plans: any[] = [];
   modelData: any;
 
-  ngOnInit(): void {
-    this.plans = planList;
+  public ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:3000/plans').subscribe((resp) => {
+      console.log(resp);
+      this.plans = resp;
+    });
   }
 
-  addPlan() {}
-  deletePlan() {}
-  title() {
+  // public addPlan(
+  //   header: string,
+  //   location: string,
+  //   subheader: string,
+  //   photo: string
+  // ) {
+  //   fetch(`${this.URL}/plans`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       header,
+  //       location,
+  //       subheader,
+  //       photo,
+  //     } as unknown as CardInfo),
+  //   });
+  // }
+  public getPlan() {}
+
+  public deletePlan() {}
+  public title() {
     console.log('Title');
   }
 
-  handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+  public handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
     ev.detail.complete();
   }
