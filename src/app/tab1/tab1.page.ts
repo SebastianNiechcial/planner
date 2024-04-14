@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalController, ItemReorderEventDetail } from '@ionic/angular';
+import {
+  ModalController,
+  ItemReorderEventDetail,
+  IonInput,
+} from '@ionic/angular';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { ModalComponent } from '../components/modal/modal.component';
 import { CardInfo } from '../utils/CardInfo';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -11,6 +17,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
+  @ViewChild('newHeaderInput') newHeaderInput?: IonInput;
+
   constructor(
     private _modalController: ModalController,
     private http: HttpClient
@@ -21,6 +29,7 @@ export class Tab1Page implements OnInit {
       subheader: new FormControl('', Validators.required),
     });
   }
+
   planFormGroup: FormGroup;
   URL = 'http://localhost:3000';
   plans: any[] = [];
@@ -28,7 +37,7 @@ export class Tab1Page implements OnInit {
   adding = false;
 
   public ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:3000/plans').subscribe((resp) => {
+    this.http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
       console.log(resp);
       this.plans = resp;
     });
@@ -53,14 +62,23 @@ export class Tab1Page implements OnInit {
   //     } as unknown as CardInfo),
   //   });
   // }
-  public addPlan() {
+  public showPlans() {
     this.adding = !this.adding;
+    setTimeout(() => {
+      if (this.newHeaderInput) {
+        this.newHeaderInput.setFocus();
+      }
+    }, 50);
   }
+
   public deletePlan() {}
+
   public onSubmit(formData: any) {
-    console.log(formData);
+    this.http.post<any[]>('http://localhost:3000/plans', formData);
     this.adding = !this.adding;
+    this.planFormGroup.reset();
   }
+
   public title() {
     console.log('Title');
   }
@@ -76,7 +94,7 @@ export class Tab1Page implements OnInit {
       componentProps: {
         modelTitle: data.header,
         modelLocation: data.location,
-        modelMessage: data.message,
+        modelSubheader: data.subheader,
         modelPhoto: data.photo,
       },
     });
