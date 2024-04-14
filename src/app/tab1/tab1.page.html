@@ -26,17 +26,18 @@
     </ion-card>
   </ion-reorder-group>
 
-  <form #f="ngForm">
+  <form [formGroup]="planFormGroup">
     <ion-card *ngIf="adding">
       <div class="card">
         <ion-card-title class="title"
           ><ion-input
+            #newHeaderInput
             label="Dodaj Nagłówek"
             labelPlacement="floating"
             fill="solid"
             type="text"
             name="header"
-            ngModel
+            formControlName="header"
         /></ion-card-title>
         <ion-img class="img">Dodaj zdjęcie</ion-img>
       </div>
@@ -47,26 +48,35 @@
           fill="solid"
           type="text"
           name="subheader"
-          ngModel
+          formControlName="subheader"
       /></ion-card-subtitle>
+      <ion-input
+        label="Dodaj Lokalizacje"
+        labelPlacement="floating"
+        fill="solid"
+        type="text"
+        name="subheader"
+        formControlName="location"
+      />
     </ion-card>
   </form>
 
   <ng-container *ngIf="!adding; then add; else send"></ng-container>
   <ng-template #add>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-      <ion-fab-button *ngIf="!adding" size="small" (click)="addPlan()">
+      <ion-fab-button *ngIf="!adding" size="small" (click)="showPlans()">
         <ion-icon name="add-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </ng-template>
+
   <ng-template #send>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button
         *ngIf="adding"
         size="small"
         type="submit"
-        (click)="onSubmit(f.value)"
+        (click)="onSubmit(planFormGroup.value)"
       >
         <ion-icon name="send-outline"></ion-icon>
       </ion-fab-button>
