@@ -1,6 +1,6 @@
 export interface CardInfo {
   header: string;
   location: string;
-  message: string;
+  subheader: string;
   photo: string;
 }
