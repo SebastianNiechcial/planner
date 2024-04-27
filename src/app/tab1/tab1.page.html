@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title (click)="title()" slot="start"> Planner </ion-title>
+    <ion-title slot="start"> Planner </ion-title>
     <ion-buttons slot="secondary">
       <ion-button slot="end" (click)="deletePlan()"
         ><ion-icon name="trash-outline"></ion-icon
@@ -10,23 +10,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-reorder-group
-    [disabled]="false"
-    (ionItemReorder)="handleReorder($any($event))"
-  >
-    <ion-card *ngFor="let plan of plans">
-      <ion-reorder class="reorder"></ion-reorder>
-      <div class="card">
-        <ion-card-title class="title"
-          >{{plan.header}} id: {{plan.id}}</ion-card-title
-        >
-        <ion-img class="img" src="{{plan.photo}}"></ion-img>
-      </div>
-      <ion-card-subtitle class="text">{{plan.subheader}}</ion-card-subtitle>
-    </ion-card>
-  </ion-reorder-group>
-
   <form [formGroup]="planFormGroup">
+    <ion-reorder-group
+      [disabled]="false"
+      (ionItemReorder)="handleReorder($any($event))"
+    >
+      <ion-card *ngFor="let plan of plans">
+        <ion-reorder class="reorder"></ion-reorder>
+        <div class="card">
+          <ion-card-title class="title"
+            >{{plan.header}} id: {{plan.id}}</ion-card-title
+          >
+          <ion-img class="img" src="{{plan.photo}}"></ion-img>
+        </div>
+        <ion-card-subtitle class="text">{{plan.subheader}}</ion-card-subtitle>
+      </ion-card>
+    </ion-reorder-group>
+
     <ion-card *ngIf="adding">
       <div class="card">
         <ion-card-title class="title"
@@ -60,8 +60,10 @@
       />
     </ion-card>
   </form>
+  <ion-button (click)="getPlans()"></ion-button>
 
   <ng-container *ngIf="!adding; then add; else send"></ng-container>
+
   <ng-template #add>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button *ngIf="!adding" size="small" (click)="showPlans()">
@@ -76,12 +78,10 @@
         *ngIf="adding"
         size="small"
         type="submit"
-        (click)="onSubmit(planFormGroup.value)"
+        (click)="onSubmit()"
       >
         <ion-icon name="send-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </ng-template>
-
-  <ng-template></ng-template>
 </ion-content>

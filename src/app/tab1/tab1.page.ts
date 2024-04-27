@@ -5,11 +5,10 @@ import {
   ItemReorderEventDetail,
   IonInput,
 } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ModalComponent } from '../components/modal/modal.component';
 import { CardInfo } from '../utils/CardInfo';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -21,23 +20,27 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private _modalController: ModalController,
-    private http: HttpClient
+    private _http: HttpClient,
+    private _fb: FormBuilder
   ) {
-    this.planFormGroup = new FormGroup({
-      header: new FormControl('', Validators.required),
-      location: new FormControl('', Validators.required),
-      subheader: new FormControl('', Validators.required),
+    this.planFormGroup = this._fb.group({
+      id: [''],
+      header: ['', Validators.required],
+      location: ['', Validators.required],
+      subheader: ['', Validators.required],
+      photo: [''],
     });
   }
 
   planFormGroup: FormGroup;
   URL = 'http://localhost:3000';
-  plans: any[] = [];
+  plans: CardInfo[] = [];
   modelData: any;
   adding = false;
+  data = '';
 
   public ngOnInit(): void {
-    this.http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
+    this._http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
       console.log(resp);
       this.plans = resp;
     });
@@ -73,14 +76,31 @@ export class Tab1Page implements OnInit {
 
   public deletePlan() {}
 
-  public onSubmit(formData: any) {
-    this.http.post<any[]>('http://localhost:3000/plans', formData);
+  public onSubmit() {
+    this._http
+      .post<CardInfo>('http://localhost:3000/plans', this.planFormGroup.value)
+      .subscribe({
+        next: (response) => {
+          console.log('sended:' + response);
+        },
+        error: (response) => {
+          console.log('add error:' + response);
+        },
+      });
     this.adding = !this.adding;
     this.planFormGroup.reset();
   }
 
-  public title() {
-    console.log('Title');
+  public getPlans() {
+    this._http.get<CardInfo>('http://localhost:3000/plans').subscribe({
+      next: (response) => {
+        this.data = JSON.stringify(response);
+        console.log('gets:' + this.data);
+      },
+      error: (response) => {
+        console.log('get error:' + response);
+      },
+    });
   }
 
   public handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
