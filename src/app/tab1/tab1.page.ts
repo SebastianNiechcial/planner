@@ -38,12 +38,10 @@ export class Tab1Page implements OnInit {
   modelData: any;
   adding = false;
   data = '';
+  isDeleting = false;
 
   public ngOnInit(): void {
-    this._http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
-      console.log(resp);
-      this.plans = resp;
-    });
+    this.getPlans();
   }
 
   // public addPlan(
@@ -73,8 +71,22 @@ export class Tab1Page implements OnInit {
       }
     }, 50);
   }
+  public toggleDelete() {
+    this.isDeleting = !this.isDeleting;
+    console.log(this.isDeleting);
+  }
 
-  public deletePlan() {}
+  public deletePlan(planId: any) {
+    this._http.delete(`${this.URL}/plans/${planId}`).subscribe({
+      next: (response) => {
+        console.log('deleting:' + response);
+      },
+      error: (response) => {
+        console.log('delete error:' + response);
+      },
+    });
+    this.getPlans()
+  }
 
   public onSubmit() {
     this._http
@@ -92,14 +104,9 @@ export class Tab1Page implements OnInit {
   }
 
   public getPlans() {
-    this._http.get<CardInfo>('http://localhost:3000/plans').subscribe({
-      next: (response) => {
-        this.data = JSON.stringify(response);
-        console.log('gets:' + this.data);
-      },
-      error: (response) => {
-        console.log('get error:' + response);
-      },
+    this._http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
+      console.log(resp);
+      this.plans = resp;
     });
   }
 

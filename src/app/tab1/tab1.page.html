@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title slot="start"> Planner </ion-title>
     <ion-buttons slot="secondary">
-      <ion-button slot="end" (click)="deletePlan()"
+      <ion-button slot="end" (click)="toggleDelete()"
         ><ion-icon name="trash-outline"></ion-icon
       ></ion-button>
     </ion-buttons>
@@ -13,14 +13,12 @@
   <form [formGroup]="planFormGroup">
     <ion-reorder-group
       [disabled]="false"
-      (ionItemReorder)="handleReorder($any($event))"
-    >
+      (ionItemReorder)="handleReorder($any($event))">
       <ion-card *ngFor="let plan of plans">
         <ion-reorder class="reorder"></ion-reorder>
+        <button class="delete-button" *ngIf="isDeleting" (click)="deletePlan(plan.id)"><ion-icon name="close-outline"></ion-icon></button>
         <div class="card">
-          <ion-card-title class="title"
-            >{{plan.header}} id: {{plan.id}}</ion-card-title
-          >
+          <ion-card-title class="title">{{plan.header}} id: {{plan.id}}</ion-card-title>
           <ion-img class="img" src="{{plan.photo}}"></ion-img>
         </div>
         <ion-card-subtitle class="text">{{plan.subheader}}</ion-card-subtitle>
