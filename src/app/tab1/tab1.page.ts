@@ -82,7 +82,7 @@ export class Tab1Page implements OnInit {
         console.log('deleting:' + response);
       },
       error: (response) => {
-        console.log('delete error:' + response);
+        console.log('delete error:' + JSON.stringify(response));
       },
     });
     this.getPlans()
@@ -93,7 +93,7 @@ export class Tab1Page implements OnInit {
       .post<CardInfo>('http://localhost:3000/plans', this.planFormGroup.value)
       .subscribe({
         next: (response) => {
-          console.log('sended:' + response);
+          console.log('sended:' + JSON.stringify(response));
         },
         error: (response) => {
           console.log('add error:' + response);
@@ -101,6 +101,7 @@ export class Tab1Page implements OnInit {
       });
     this.adding = !this.adding;
     this.planFormGroup.reset();
+    this.getPlans()
   }
 
   public getPlans() {
