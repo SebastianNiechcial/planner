@@ -7,6 +7,7 @@
   justify-content: space-between;
 }
 
+
 .card ion-card-title {
   align-content: center;
   margin-left: 20vw;
@@ -15,8 +16,8 @@
 
 .delete-button {
 position: absolute;
-width: 10%;
-height: 20%;
+width: 2rem;
+height: 2rem;
 top: 0px;
 right: 0px;
 background-color: red;
@@ -40,3 +41,15 @@ font-size: xx-large;
 .text {
   margin: 10px;
 }
+
+ion-modal {
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+

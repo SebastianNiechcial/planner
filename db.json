@@ -8,13 +8,6 @@
       "photo": "https://ionic-docs-demo-v7.vercel.app/assets/madison.jpg"
     },
     {
-      "id": "3",
-      "header": "Vacation 3",
-      "location": "Grecja",
-      "subheader": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae suscipit ipsa iure numquam! Nobis eum aliquid eius odit rem, illum in voluptatum modi asperiores repellat eveniet maiores velit, quia debitis? Distinctio voluptatem, beatae tenetur eligendi velit veniam accusamus illum reprehenderit quia dolores molestias et sint maxime facilis, labore dignissimos! Ad.",
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Toucans_%28Ramphastidae%29.jpg"
-    },
-    {
       "id": "4",
       "header": "Vacation 4",
       "location": "Grecja",
@@ -22,11 +15,11 @@
       "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Toucans_%28Ramphastidae%29.jpg"
     },
     {
-      "id": "584b",
-      "header": "dwadaw",
-      "location": "dwadaw",
-      "subheader": "dwadwa",
-      "photo": ""
+      "id": "3e30",
+      "header": "dawdaw",
+      "location": "Grecja",
+      "subheader": "dwawand ijwdjiwadjwajowajoiwjiow ido wa dwjw  wwd ji dwjiodwaiojdiowajd jwaiojaw w wajid jiowad wai diowa jiojiodioawd ioawjwdajdj oi waj jiojjiowda jiowda iojjiowda jowdai  jodaw",
+      "photo": "https://ionic-docs-demo-v7.vercel.app/assets/madison.jpg"
     }
   ],
   "authors": [
