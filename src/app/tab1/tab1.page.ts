@@ -43,7 +43,6 @@ export class Tab1Page implements OnInit {
 
   public toggleDelete() {
     this.isDeleting = !this.isDeleting;
-    console.log(this.isDeleting);
   }
 
   public deletePlan(planId: any) {
@@ -72,14 +71,13 @@ export class Tab1Page implements OnInit {
         },
       });
     this.planFormGroup.reset();
-    this.planFormGroup.value.photo = this.pictureUrl
+    this.planFormGroup.get('photo')?.setValue(this.pictureUrl)
     setTimeout(() => this.getPlans(), 1000)
 
   }
 
   public getPlans() {
     this._http.get<any[]>(`${this.URL}/plans`).subscribe((resp) => {
-      console.log(resp);
       this.plans = resp;
     });
   }
