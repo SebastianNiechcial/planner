@@ -1,5 +1,5 @@
 export interface CardInfo {
-  id: string;
+  id: number;
   header: string;
   location: string;
   subheader: string;

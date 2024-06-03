@@ -82,8 +82,16 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  private updatePlans(plans: CardInfo[]) {
+    this._http.patch<CardInfo>('http://localhost:3000/plans', plans).subscribe(
+    )
+  }
+
   public handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+    [this.plans[ev.detail.from], this.plans[ev.detail.to]] = [this.plans[ev.detail.to], this.plans[ev.detail.from]]
+    this.updatePlans(this.plans)
+    console.log(this.plans)
     ev.detail.complete();
   }
 }
