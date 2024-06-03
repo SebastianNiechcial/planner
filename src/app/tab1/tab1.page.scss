@@ -8,10 +8,11 @@
 }
 
 
-.card ion-card-title {
+.title {
   align-content: center;
   margin-left: 20vw;
   margin-right: 20vw;
+  width: 25vw;
 }
 
 .delete-button {
@@ -23,6 +24,14 @@ right: 0px;
 background-color: red;
 color: black;
 font-size: xx-large;
+}
+
+ion-img {
+  resize: both;
+  width: 100%;
+  height: 100%;
+  max-width: 50vw;
+  max-height: 12vh
 }
 
 .menu-button {
