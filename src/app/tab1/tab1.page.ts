@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  ModalController,
-  ItemReorderEventDetail,
-} from '@ionic/angular';
+import { ModalController, ItemReorderEventDetail } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CardInfo } from '../utils/CardInfo';
-
 
 @Component({
   selector: 'app-tab1',
@@ -15,10 +11,7 @@ import { CardInfo } from '../utils/CardInfo';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-  constructor(
-    private _http: HttpClient,
-    private _fb: FormBuilder
-  ) {
+  constructor(private _http: HttpClient, private _fb: FormBuilder) {
     this.planFormGroup = this._fb.group({
       id: [''],
       header: ['', Validators.required],
@@ -27,7 +20,7 @@ export class Tab1Page implements OnInit {
       photo: [this.pictureUrl],
     });
   }
-  pictureUrl = "https://picsum.photos/400/300"
+  pictureUrl = 'https://picsum.photos/400/300';
   planFormGroup: FormGroup;
   URL = 'http://localhost:3000';
   plans: CardInfo[] = [];
@@ -38,7 +31,7 @@ export class Tab1Page implements OnInit {
   }
 
   private generateUUID() {
-    crypto.randomUUID()
+    crypto.randomUUID();
   }
 
   public toggleDelete() {
@@ -54,12 +47,12 @@ export class Tab1Page implements OnInit {
         console.log('delete error:' + JSON.stringify(response));
       },
     });
-    this.getPlans()
+    this.getPlans();
   }
 
   public onSubmit() {
-    let id = this.generateUUID()
-    this.planFormGroup.value.id = id
+    let id = this.generateUUID();
+    this.planFormGroup.value.id = id;
     this._http
       .post<CardInfo>('http://localhost:3000/plans', this.planFormGroup.value)
       .subscribe({
@@ -71,9 +64,8 @@ export class Tab1Page implements OnInit {
         },
       });
     this.planFormGroup.reset();
-    this.planFormGroup.get('photo')?.setValue(this.pictureUrl)
-    setTimeout(() => this.getPlans(), 1000)
-
+    this.planFormGroup.get('photo')?.setValue(this.pictureUrl);
+    setTimeout(() => this.getPlans(), 1000);
   }
 
   public getPlans() {
@@ -82,16 +74,23 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  private updatePlans(plans: CardInfo[]) {
-    this._http.patch<CardInfo>('http://localhost:3000/plans', plans).subscribe(
-    )
+  private updatePlans(plan: CardInfo, planId: number) {
+    this._http
+      .patch<CardInfo>(`http://localhost:3000/plans/${planId}`, plan)
+      .subscribe((r) => console.log(r));
   }
 
-  public handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
-    [this.plans[ev.detail.from], this.plans[ev.detail.to]] = [this.plans[ev.detail.to], this.plans[ev.detail.from]]
-    this.updatePlans(this.plans)
-    console.log(this.plans)
-    ev.detail.complete();
+  public async handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+    let fromValue = this.plans[ev.detail.from];
+    let toValue = this.plans[ev.detail.to];
+    try {
+      this.updatePlans(fromValue, toValue.id);
+      this.updatePlans(toValue, fromValue.id);
+    } catch (error) {
+      console.log(`błąd zmiany danych: ${error} `);
+    } finally {
+      this.getPlans();
+      ev.detail.complete();
+    }
   }
 }
